@@ -1,0 +1,33 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions kek 🚀
+on: [push]
+
+jobs:
+    Explore-GitHub-Actions:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [18.x]
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Install Yarn
+              run: npm install -g yarn
+
+            - name: Install dependencies using Yarn
+              run: |
+                  yarn install
+
+            - name: Run unit tests
+              run: |
+                  yarn run check:unit
+
+            - name: Run integration tests
+              run: |
+                  yarn run check:integration
